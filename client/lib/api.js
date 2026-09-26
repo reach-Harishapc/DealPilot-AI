@@ -1,4 +1,7 @@
-const RAW_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+const RAW_BASE = process.env.NEXT_PUBLIC_API_URL;
+if (!RAW_BASE) {
+  throw new Error("NEXT_PUBLIC_API_URL is not set. Set it in Vercel Project → Settings → Environment Variables as Config, then redeploy.");
+}
 export const API_BASE = RAW_BASE.replace(/\/+$/, "");
 
 export async function apiFetch(path, options = {}) {
