@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { apiFetch } from "../../../lib/api";
 import { 
   ShieldCheck, 
   Sparkles, 
@@ -126,16 +127,13 @@ I have synchronized your active pipeline for **Rish AI Labs** ($1.15M total acro
         content: m.content
       }));
 
-      const res = await fetch("http://localhost:5001/api/coach/chat", {
+      const data = await apiFetch("/api/coach/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: query.trim(),
           conversationHistory: historyPayload
         })
       });
-
-      const data = await res.json();
       if (data.success && data.data?.reply) {
         const botMsg = {
           id: `bot-${Date.now()}`,
@@ -168,16 +166,14 @@ I have synchronized your active pipeline for **Rish AI Labs** ($1.15M total acro
 
     setSimLoading(true);
     try {
-      const res = await fetch("http://localhost:5001/api/simulate-objection", {
+      const data = await apiFetch("/api/simulate-objection", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           objection: textToSubmit,
           personaTitle: persona,
           companyName: company
         })
       });
-      const data = await res.json();
       if (data.success) {
         setSimResult(data.data);
       }

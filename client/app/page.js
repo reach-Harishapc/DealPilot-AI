@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { apiFetch } from "../../lib/api";
 import Sidebar from "./components/Sidebar";
 import TopHeader from "./components/TopHeader";
 import PipelineMeetingsView from "./components/PipelineMeetingsView";
@@ -85,9 +86,9 @@ export default function Home() {
     async function loadData() {
       try {
         const [meetRes, accRes, catRes] = await Promise.all([
-          fetch("http://localhost:5001/api/meetings").then((r) => r.json()),
-          fetch("http://localhost:5001/api/accounts").then((r) => r.json()),
-          fetch("http://localhost:5001/api/catalog").then((r) => r.json())
+          apiFetch("/api/meetings"),
+          apiFetch("/api/accounts"),
+          apiFetch("/api/catalog")
         ]);
 
         if (meetRes.success && meetRes.data.length > 0) {
@@ -107,12 +108,10 @@ export default function Home() {
     setSelectedMeetingId(meetingId);
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5001/api/battlecard", {
+      const data = await apiFetch("/api/battlecard", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ meetingId })
       });
-      const data = await res.json();
       if (data.success) {
         setBattlecard(data.data);
       }

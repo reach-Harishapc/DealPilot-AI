@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "../../../lib/api";
 import { X, Sparkles, Building2, Search, HelpCircle } from "lucide-react";
 
 export default function CustomCompanyModal({ isOpen, onClose }) {
@@ -15,9 +16,8 @@ export default function CustomCompanyModal({ isOpen, onClose }) {
     if (!companyName) return;
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5001/api/analyze-custom", {
+      const data = await apiFetch("/api/analyze-custom", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           companyName,
           industry,
@@ -25,7 +25,6 @@ export default function CustomCompanyModal({ isOpen, onClose }) {
           meetingGoal
         })
       });
-      const data = await res.json();
       if (data.success) {
         setAnalysis(data.data);
       }

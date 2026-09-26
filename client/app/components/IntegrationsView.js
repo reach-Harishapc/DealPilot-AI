@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "../../../lib/api";
 import { Link2, CheckCircle2, RefreshCw, Shield, ExternalLink, ArrowRight, Check } from "lucide-react";
 
 export default function IntegrationsView({ onDealImported, onMeetingsUpdated }) {
@@ -54,8 +55,7 @@ export default function IntegrationsView({ onDealImported, onMeetingsUpdated }) 
     setSyncing(true);
     setSyncStatusMsg("Pinging HubSpot API & refreshing CRM data...");
     try {
-      const res = await fetch("http://localhost:5001/api/hubspot/status");
-      const data = await res.json();
+      const data = await apiFetch("/api/hubspot/status");
       if (data.success && data.data?.connected) {
         setSyncStatusMsg("Successfully synchronized with HubSpot Portal 247526396!");
       }
@@ -73,16 +73,13 @@ export default function IntegrationsView({ onDealImported, onMeetingsUpdated }) 
     setImporting(true);
     try {
       // Fetch deals
-      const dealsRes = await fetch("http://localhost:5001/api/hubspot/deals");
-      const dealsData = await dealsRes.json();
+      const dealsData = await apiFetch("/api/hubspot/deals");
       if (dealsData.success && dealsData.data?.length > 0) {
         const dealToSync = dealsData.data[0];
-        const syncRes = await fetch("http://localhost:5001/api/hubspot/sync-to-pipeline", {
+        const syncData = await apiFetch("/api/hubspot/sync-to-pipeline", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ dealId: dealToSync.id })
         });
-        const syncData = await syncRes.json();
         if (syncData.success) {
           setImportedSuccess(true);
           if (onDealImported) {
@@ -101,10 +98,9 @@ export default function IntegrationsView({ onDealImported, onMeetingsUpdated }) 
   const handleSyncHubSpotCalendar = async () => {
     setSyncingMeetings(true);
     try {
-      const res = await fetch("http://localhost:5001/api/hubspot/sync-calendar", {
+      const data = await apiFetch("/api/hubspot/sync-calendar", {
         method: "POST"
       });
-      const data = await res.json();
       if (data.success && data.data) {
         setMeetingsSyncedSuccess(true);
         if (onMeetingsUpdated) {

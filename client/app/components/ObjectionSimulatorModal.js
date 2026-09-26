@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "../../../lib/api";
 import { X, Sparkles, ShieldCheck, MessageSquare, CornerDownRight, Lightbulb } from "lucide-react";
 
 export default function ObjectionSimulatorModal({ isOpen, onClose }) {
@@ -23,16 +24,14 @@ export default function ObjectionSimulatorModal({ isOpen, onClose }) {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5001/api/simulate-objection", {
+      const data = await apiFetch("/api/simulate-objection", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           objection: textToSubmit,
           personaTitle: persona,
           companyName: company
         })
       });
-      const data = await res.json();
       if (data.success) {
         setResult(data.data);
       }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "../../../lib/api";
 import { X, Sparkles, Plus, CheckCircle2, RefreshCw } from "lucide-react";
 
 export default function AddSolutionModal({ isOpen, onClose, onSolutionAdded }) {
@@ -40,12 +41,10 @@ export default function AddSolutionModal({ isOpen, onClose, onSolutionAdded }) {
     setAiLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5001/api/catalog/ai-generate", {
+      const data = await apiFetch("/api/catalog/ai-generate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: name.trim(), businessUnit })
       });
-      const data = await res.json();
       if (data.success && data.data) {
         const spec = data.data;
         if (spec.category) setCategory(spec.category);
@@ -88,12 +87,10 @@ export default function AddSolutionModal({ isOpen, onClose, onSolutionAdded }) {
         typicalROI: typicalROI.trim() || "3.5x ROI within 6 months"
       };
 
-      const res = await fetch("http://localhost:5001/api/catalog", {
+      const data = await apiFetch("/api/catalog", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
       if (data.success) {
         if (onSolutionAdded) {
           onSolutionAdded(data.data);

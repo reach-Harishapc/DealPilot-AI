@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "../../../lib/api";
 import { Building2, TrendingUp, Users, DollarSign, ArrowRight, Flame, Layers, RefreshCw, ExternalLink, CheckCircle2, Plus } from "lucide-react";
 
 export default function AccountsView({ accounts, onAccountsUpdated, onOpenNewAccount }) {
@@ -13,10 +14,9 @@ export default function AccountsView({ accounts, onAccountsUpdated, onOpenNewAcc
   const handleSyncHubSpotAccounts = async () => {
     setSyncing(true);
     try {
-      const res = await fetch("http://localhost:5001/api/hubspot/sync-accounts", {
+      const data = await apiFetch("/api/hubspot/sync-accounts", {
         method: "POST"
       });
-      const data = await res.json();
       if (data.success && data.data) {
         if (onAccountsUpdated) {
           onAccountsUpdated(data.data);

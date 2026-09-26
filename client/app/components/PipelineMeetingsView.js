@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "../../../lib/api";
 import BattlecardView from "./BattlecardView";
 import { 
   Calendar, 
@@ -78,10 +79,9 @@ export default function PipelineMeetingsView({
   const handleSyncHubSpotCalendar = async () => {
     setSyncingCalendar(true);
     try {
-      const res = await fetch("http://localhost:5001/api/hubspot/sync-calendar", {
+      const data = await apiFetch("/api/hubspot/sync-calendar", {
         method: "POST"
       });
-      const data = await res.json();
       if (data.success && data.data && onMeetingsUpdated) {
         onMeetingsUpdated(data.data);
       }
