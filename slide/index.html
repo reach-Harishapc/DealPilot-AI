@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DealPilot AI - DAY-1 Builders Pitch Fest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(18, 24, 38, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-primary: #6366f1;
+      --accent-secondary: #8b5cf6;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    .slide-container {
+      width: 100%;
+      max-width: 1400px;
+      aspect-ratio: 16 / 9;
+      background: rgba(11, 15, 25, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px var(--accent-glow);
+      backdrop-filter: blur(20px);
+      padding: 40px 48px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #a5b4fc;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .slide-badge span.dot {
+      width: 8px;
+      height: 8px;
+      background: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--emerald);
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .slide-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 8px;
+    }
+
+    .slide-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-weight: 400;
+      margin-top: 4px;
+    }
+
+    /* Grid layout */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      grid-gap: 24px;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.4), transparent);
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #818cf8;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .problem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .icon-box {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .icon-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    .icon-success {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    .icon-ai {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+    }
+
+    /* Metrics highlight */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .metric-pill {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .metric-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--emerald);
+    }
+
+    .metric-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Architecture & Solution side */
+    .sol-desc {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+      margin-bottom: 16px;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #94a3b8;
+    }
+
+    .tag.highlight {
+      border-color: rgba(99, 102, 241, 0.4);
+      color: #c7d2fe;
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .footer-bar {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .team-info {
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header-row">
+      <div>
+        <div class="slide-badge">
+          <span class="dot"></span> DAY-1 Builders Pitch Fest • Sales Automation AI
+        </div>
+        <h1 class="slide-title">DealPilot AI</h1>
+        <p class="slide-subtitle">Autonomous Pre-Meeting Intelligence & Dynamic Pitch Strategy Copilot for Complex B2B Enterprise Sales</p>
+      </div>
+      <div style="text-align: right;">
+        <span style="font-family: 'JetBrains Mono'; font-size: 0.9rem; color: #6366f1; font-weight: 600;">SLIDE 1 OF 1</span>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <!-- Left Column: The Problem & Why -->
+      <div class="card">
+        <div class="card-title">
+          <span>⚠️</span> The Problem & Why It Matters
+        </div>
+        <ul class="problem-list">
+          <li>
+            <div class="icon-box icon-danger">1</div>
+            <div><strong>Fragmented Cognitive Overload:</strong> Enterprise reps sell across 4+ Business Units. Prepping for a single executive call requires 2–3 hours digging through emails, 10-K filings, and product sheets.</div>
+          </li>
+          <li>
+            <div class="icon-box icon-danger">2</div>
+            <div><strong>The "Catalog Dump" Failure:</strong> Because reps lack instant mapping between customer pain and product features, 68% of discovery calls default to generic slide decks.</div>
+          </li>
+          <li>
+            <div class="icon-box icon-danger">3</div>
+            <div><strong>Internal Silos & Missed Triggers:</strong> Teams miss multi-million-dollar cross-sell opportunities because BU teams operate in isolation without unified account signals.</div>
+          </li>
+        </ul>
+
+        <div class="metrics-row">
+          <div class="metric-pill">
+            <div class="metric-val">85%</div>
+            <div class="metric-lbl">Prep Time Slashed (3h &rarr; 2m)</div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-val">2.4x</div>
+            <div class="metric-lbl">Higher 1st-Call Conversion</div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-val">100%</div>
+            <div class="metric-lbl">Genuinely Dynamic AI</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: How AI Solves It & Architecture -->
+      <div class="card">
+        <div class="card-title">
+          <span>⚡</span> The AI Solution & Technical Choices
+        </div>
+        <p class="sol-desc">
+          <strong>DealPilot AI</strong> ingests synthetic enterprise CRM history, live industry triggers, and multi-BU product catalogs to autonomously synthesize an executive <strong>Meeting Battlecard</strong> in seconds:
+        </p>
+        <ul class="problem-list" style="margin-bottom: 16px;">
+          <li>
+            <div class="icon-box icon-success">✓</div>
+            <div><strong>Persona Psychology Engine:</strong> Maps buyer fears, KPIs, and MEDDIC decision drivers.</div>
+          </li>
+          <li>
+            <div class="icon-box icon-success">✓</div>
+            <div><strong>Dynamic Value Matching:</strong> Accurately pairs specific pain points to the exact BU solution.</div>
+          </li>
+          <li>
+            <div class="icon-box icon-ai">⚡</div>
+            <div><strong>Interactive Objection Simulator:</strong> Live real-time coaching for high-stakes buyer pushbacks.</div>
+          </li>
+        </ul>
+
+        <div class="tech-tags">
+          <span class="tag highlight">Next.js (Vercel)</span>
+          <span class="tag highlight">Express.js (Render)</span>
+          <span class="tag highlight">GitHub CI/CD</span>
+          <span class="tag">Target: AWS Native (Bedrock, ECS, OpenSearch)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div>
+        <strong>What We Build Next:</strong> Real-time in-meeting audio cue cards, 2-way Salesforce sync, and cross-BU collision alerts.
+      </div>
+      <div class="team-info">
+        DealPilot • Ready for Live Demo & Q&A
+      </div>
+    </div>
+  </div>
+</body>
+</html>
