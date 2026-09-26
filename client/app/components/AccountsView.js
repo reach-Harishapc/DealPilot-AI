@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { apiFetch } from "../../../lib/api";
+import { apiFetch } from "../../lib/api";
 import { Building2, TrendingUp, Users, DollarSign, ArrowRight, Flame, Layers, RefreshCw, ExternalLink, CheckCircle2, Plus } from "lucide-react";
 
 export default function AccountsView({ accounts, onAccountsUpdated, onOpenNewAccount }) {

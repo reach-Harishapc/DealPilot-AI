@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { apiFetch } from "../../../lib/api";
+import { apiFetch } from "../../lib/api";
 import { X, Sparkles, Building2, Search, HelpCircle } from "lucide-react";
 
 export default function CustomCompanyModal({ isOpen, onClose }) {

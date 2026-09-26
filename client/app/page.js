@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { apiFetch } from "../../lib/api";
+import { apiFetch } from "../lib/api";
 import Sidebar from "./components/Sidebar";
 import TopHeader from "./components/TopHeader";
 import PipelineMeetingsView from "./components/PipelineMeetingsView";

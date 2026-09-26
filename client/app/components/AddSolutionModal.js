@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { apiFetch } from "../../../lib/api";
+import { apiFetch } from "../../lib/api";
 import { X, Sparkles, Plus, CheckCircle2, RefreshCw } from "lucide-react";
 
 export default function AddSolutionModal({ isOpen, onClose, onSolutionAdded }) {

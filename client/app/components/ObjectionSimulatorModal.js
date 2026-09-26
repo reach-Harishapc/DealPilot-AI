@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { apiFetch } from "../../../lib/api";
+import { apiFetch } from "../../lib/api";
 import { X, Sparkles, ShieldCheck, MessageSquare, CornerDownRight, Lightbulb } from "lucide-react";
 
 export default function ObjectionSimulatorModal({ isOpen, onClose }) {

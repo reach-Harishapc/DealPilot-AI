@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { apiFetch } from "../../../lib/api";
+import { apiFetch } from "../../lib/api";
 import { Link2, CheckCircle2, RefreshCw, Shield, ExternalLink, ArrowRight, Check } from "lucide-react";
 
 export default function IntegrationsView({ onDealImported, onMeetingsUpdated }) {
